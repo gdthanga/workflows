@@ -1,18 +1,25 @@
-name: Docker Image CI
+name: Docker CI Test
 
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
 
 jobs:
-
-  build:
-
+  docker-test:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t my-image .
+
+      - name: Run container
+        run: docker run -d -p 8080:80 --name my-container my-image
+
+      - name: Wait for container
+        run: sleep 5
+
+      - name: Test service
+        run: curl http://localhost:8080
