@@ -1,11 +1,3 @@
-# Use official nginx image
 FROM nginx:latest
-
-# Copy custom html files to nginx web directory
-COPY ./html /usr/share/nginx/html
-
-# Expose port 80
+COPY html /usr/share/nginx/html
 EXPOSE 80
-
-# Start nginx
-CMD ["nginx", "-g", "daemon off;"]
