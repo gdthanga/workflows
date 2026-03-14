@@ -16,7 +16,7 @@ jobs:
         run: docker build -t dotnet-image -f dotnet/Dockerfile dotnet
 
       - name: Run container
-        run: docker run -d -p 8080:80 --name my-container my-image
+        run: docker run -d -p 8080:80 --name dotnet-container dotnet-image
 
       - name: Wait for container
         run: sleep 5
