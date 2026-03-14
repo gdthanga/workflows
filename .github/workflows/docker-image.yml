@@ -13,7 +13,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Build Docker image
-        run: docker build -t my-image dotnet/.
+        run: docker build -t dotnet-image -f dotnet/Dockerfile dotnet
 
       - name: Run container
         run: docker run -d -p 8080:80 --name my-container my-image
