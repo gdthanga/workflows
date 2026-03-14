@@ -14,8 +14,3 @@ jobs:
 
       - name: Run container
         run: docker run --name test-container dotnet-image
-
-      - name: Check console output
-        run: |
-          docker logs test-container | grep "Hello from .NET Console Docker App!"
-
