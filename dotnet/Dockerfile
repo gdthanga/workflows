@@ -1,27 +1,29 @@
-# -------- Build Stage --------
+# ---------- Build Stage ----------
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-# Copy csproj and restore dependencies
-COPY *.csproj ./
+# copy project file
+COPY HelloDocker.csproj .
+
+# restore dependencies
 RUN dotnet restore
 
-# Copy the rest of the source code
+# copy source code
 COPY . .
 
-# Publish the application
+# publish app
 RUN dotnet publish -c Release -o /app/publish
 
 
-# -------- Runtime Stage --------
+# ---------- Runtime Stage ----------
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
 
-# Copy published output from build stage
+# copy published files
 COPY --from=build /app/publish .
 
-# Expose port
+# expose web port
 EXPOSE 80
 
-# Start application
-ENTRYPOINT ["dotnet", "YourApp.dll"]
+# start application
+ENTRYPOINT ["dotnet", "HelloDocker.dll"]
